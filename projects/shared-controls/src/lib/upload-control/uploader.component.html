@@ -1,0 +1,84 @@
+<div>
+  <div fileDragDrop (filesChangeEmiter)="onFilesChange($event)" class="file-drag-container">
+    <span class="header-text">
+      {{option?.labels?.title || 'Upload Files'}}
+    </span>
+    <!-- <div *ngFor="let item of inprogressList"
+    class="fade" [@state]="(item.result !== null && item?.progress === 100) ? 'hidden' : 'visible'" (@state.done)="animation_onFinished($event, item)">
+      <div class="progress-container">
+        <mat-progress-bar [value]="item.progress"></mat-progress-bar>
+        <span>{{item.file.name}}</span>
+      </div>
+      <mat-icon style="color: darkslategray; cursor: pointer;" (click)="delete_onClick(item)" >clear</mat-icon>
+    </div> -->
+    <div class="drag-here">
+      <button mat-button color="primary" (click)="openFile_onClick()" style="pointer-events: painted;">
+        <div class="button-upload">
+          <mat-icon>cloud_upload</mat-icon>
+          {{ option?.labels?.fileDrag || 'Drag File Here...'}}
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="file-container">
+    <div class="mat-elevation-z4 card-preview" *ngFor="let item of option?.files">
+        <div class="file-header">
+            {{item?.file?.name || item?.title || ''}}
+        </div>
+        <embed *ngIf="item?.type === 0" class="content-preview" [ngStyle]="{'background-image': 'url(' + item?.url + ')'}" [type]="item.file.type" style="cursor: pointer;" (click)="view_onClick(item)">
+        <embed *ngIf="item?.type !== 0" class="content-preview" [src]="item?.url | safe:'resourceUrl'" [type]="item.file.type">
+        <div class="file-action-container">
+          <button mat-button (click)="view_onClick(item)" [matTooltip]="option?.labels?.viewButton || 'View Image'">
+            <mat-icon>fullscreen_exit</mat-icon>
+          </button>
+          <button mat-button (click)="delete_onClick(item)" [matTooltip]="option?.labels?.deleteButton || 'Delete Image'">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-button (click)="view_onClick(item, true)" [matTooltip]="option?.labels?.cropButton || 'Crop Image'">
+            <mat-icon>crop</mat-icon>
+          </button>
+        </div>
+        <div class="file-footer">
+            {{ getStatus(item) }}
+            <mat-progress-bar *ngIf="item?.progress !== null && item?.progress <= 100" [value]="item.progress"></mat-progress-bar>
+        </div>
+    </div>
+  </div>
+</div>
+<input type="file" #fileUpload id="fileUpload" name="fileUpload" [multiple]="option?.multiple" [accept]="option.accept || 'image/*'" style="display:none;" (change)="uploader_onChange($event)" />
+
+<div class="preview-overlay" [@changeDivSize]=currentState>
+  <!-- Image File -->
+  <ng-container *ngIf="filePreview !== null && filePreview.type === 0">
+    <div *ngIf="activeCrop === false" class="image-preview-fullscreen" [ngStyle]="{'background-image': 'url(' + filePreview?.url + ')'}"></div>
+    <ng-container *ngIf="activeCrop === true">
+      <image-cropper [format]="option?.cropperOption?.format || 'png'"
+                    [imageFile]="filePreview?.file"
+                    [maintainAspectRatio]="option?.cropperOption?.maintainAspectRatio || true"
+                    [aspectRatio]="4/3"
+                    [canvasRotation]="canvasRotation"
+                    [transform]="transform"
+                    [backgroundColor]="option?.cropperOption?.backgroundColor || 'black'"
+                    (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded($event)"
+                    (cropperReady)="cropperReady()"
+                    (loadImageFailed)="loadImageFailed()">
+      </image-cropper>
+      <div class="image-action">
+        <button mat-icon-button (click)="rotateLeft_onClick()"><mat-icon>rotate_left</mat-icon></button>
+        <button mat-icon-button (click)="rotateRight_onClick()"><mat-icon>rotate_right</mat-icon></button>
+        <button mat-icon-button (click)="zoomIn_onClick()"><mat-icon>zoom_in</mat-icon></button>
+        <button mat-icon-button (click)="zoomOut_onClick()"><mat-icon>zoom_out</mat-icon></button>
+        <button mat-icon-button (click)="flip_onClick()"><mat-icon>flip</mat-icon></button>
+        <button mat-icon-button (click)="reset_onClick()"><mat-icon>settings_backup_restore</mat-icon></button>
+        <span class="splitter"></span>
+        <button mat-icon-button (click)="save_onClick()"><mat-icon>save</mat-icon></button>
+      </div>
+      <mat-spinner *ngIf="imageLoading" class="image-loading"></mat-spinner>
+    </ng-container>
+  </ng-container>
+  <!-- Other File -->
+  <embed *ngIf="filePreview !== null && filePreview.type !== 0" class="embed-preview-fullscreen" [src]="filePreview?.url | safe:'resourceUrl'" [type]="filePreview.file?.type">
+  <mat-icon class="close-preview" (click)="closePreview_onClick()">close</mat-icon>
+</div>

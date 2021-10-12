@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -92,6 +93,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -123,6 +125,50 @@
           }
         }
       }
-    }},
-  "defaultProject": "shared-control-workspace"
+    },
+    "shared-controls": {
+      "projectType": "library",
+      "root": "projects/shared-controls",
+      "sourceRoot": "projects/shared-controls/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/shared-controls/tsconfig.lib.json",
+            "project": "projects/shared-controls/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/shared-controls/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/shared-controls/src/test.ts",
+            "tsConfig": "projects/shared-controls/tsconfig.spec.json",
+            "karmaConfig": "projects/shared-controls/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/shared-controls/tsconfig.lib.json",
+              "projects/shared-controls/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "shared-control-workspace",
+  "cli": {
+    "analytics": "8408de95-217b-48be-b20d-5b331c47870c"
+  }
 }

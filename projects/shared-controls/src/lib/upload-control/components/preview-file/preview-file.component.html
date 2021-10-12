@@ -1,0 +1,5 @@
+<div class="preview-overlay" [@changeDivSize]=currentState>
+  <div *ngIf="filePreview !== null && filePreview.type === 0" class="image-preview-fullscreen" [ngStyle]="{'background-image': 'url(' + filePreview?.url.toString() + ')'}"></div>
+  <object *ngIf="filePreview !== null && filePreview.type !== 0" class="embed-preview-fullscreen" [data]="filePreview?.url | safe:'resourceUrl'" [type]="filePreview.file?.type"></object>
+  <mat-icon class="close-preview" (click)="closePreview_onClick()">close</mat-icon>
+</div>
