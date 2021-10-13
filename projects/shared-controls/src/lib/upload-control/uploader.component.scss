@@ -17,10 +17,14 @@ mat-card {
   position: absolute;
   margin-top: -26px;
   line-height: 25px;
-  right: 15px;
+  left: 15px;
   padding: 1px 8px;
   border: dashed 1px #696d7d;
   border-radius: 8px;
+}
+
+.header-text {
+  right: 15px;
 }
 
 .progress-container {
