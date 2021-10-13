@@ -95,17 +95,18 @@ export class UploadComponent extends BaseFieldDirective<UploadOption>  implement
       );
   }
 
-  private uploadFiles() {
+  private uploadFiles(uf: UploadFile) {
     this.fileUpload.nativeElement.value = '';
     if(this.option.uploadUrl !== undefined && this.option.uploadUrl !== null && this.option.uploadUrl !== '') {
-      this.option.files.filter( f => f.inProgress === false).forEach((file) => {
-        this.uploadFile(file);
-      });
+      // this.option.files.filter( f => f.inProgress === false).forEach((file) => {
+      //   this.uploadFile(file);
+      // });
+      this.uploadFile(uf);
     } else {
       /* event raise to upload by user */
       const e: FieldEvent<UploadOption> = {
         sender: this.option,
-        value: this.option.files.filter( f => f.inProgress === false),
+        value:  uf,//this.option.files.filter( f => f.inProgress === false),
         event: 'selected'
        };
       this.event.emit(e);
@@ -170,7 +171,7 @@ export class UploadComponent extends BaseFieldDirective<UploadOption>  implement
           const uf: UploadFile = { file: f, inProgress: false, progress: 0,response: null, url: (e.target as any).result, type: checkPreview.type };
           // this.inprogressList.push(uf);
           this.option.files.push(uf);
-          this.uploadFiles();
+          this.uploadFiles(uf);
         };
       })(file);
     }

@@ -9,4 +9,3 @@ export * from './common/clipboard';
 export * from './common/tokens';
 export * from './models/tooltip';
 export * from './common/type';
-export * from './services/form.service';

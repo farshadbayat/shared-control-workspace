@@ -4,6 +4,7 @@
 export * from './lib/core/core.module';
 export * from './lib/core/common/type';
 export * from './lib/core/common/base-field.directive';
+// export * from './lib/core/index';
 
 /*
  * Public API Surface of shared-controls

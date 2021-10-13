@@ -36,7 +36,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ImageCropperModule,
     MatProgressSpinnerModule,
   ],
-  exports: [UploadComponent],
+  exports: [UploadComponent, ImageCropperModule],
   providers: []
 })
 export class UploadModule {

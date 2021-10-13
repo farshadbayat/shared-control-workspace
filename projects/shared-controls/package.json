@@ -1,6 +1,19 @@
 {
   "name": "shared-controls",
   "version": "0.0.1",
+  "description": "angular shared control workspace with library.",
+  "keywords": [
+    "angular",
+    "multi",
+    "library'",
+    "control",
+    "field",
+    "dynamic",
+    "form",
+    "dynamic-form"
+  ],
+  "author": "FB",
+  "license": "ISC",
   "peerDependencies": {
     "@angular/common": "^10.2.4",
     "@angular/core": "^10.2.4"
